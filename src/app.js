@@ -1,5 +1,6 @@
-import { createForm } from "./components/Form.js";
+import { createForm, initHandleSubmit } from "./components/Form.js";
 import { createOptions } from "./components/Options.js";
+import { SUBMIT_BTN_ID } from "./constants.js";
 
 const app = async () => {
   const app = document.getElementById("app");
@@ -9,6 +10,12 @@ const app = async () => {
 
   // Add form element to app
   app.innerHTML += formTemplate;
+
+  // Add event handler to submit button
+  const handleSubmit = initHandleSubmit();
+  document
+    .getElementById(SUBMIT_BTN_ID)
+    .addEventListener("click", handleSubmit);
 
   // Get all currencies and create options elements
   const optionsTemplate = await createOptions();

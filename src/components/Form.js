@@ -39,8 +39,6 @@ export const createForm = () => {
     id = ${SUBMIT_BTN_ID}
     type="button"
     class="btn btn-primary col-12"
-    data-bs-toggle="collapse"
-    data-bs-target="#collapseResult"
   >
     Submit
   </button>
@@ -57,35 +55,37 @@ const handleSwitchCurrencies = (event) => {
   }
 };
 
-const handleSubmit = async (event) => {
-  if (event.target?.id === SUBMIT_BTN_ID) {
-    event.preventDefault();
-
-    const amount = document.getElementById(AMOUNT_ID).value;
-
-    if (!amount) {
-      return;
-    }
-
-    // Create query and fetch result
-    const fromCurrency = document.getElementById(FROM_ID).value;
-    const toCurrency = document.getElementById(TO_ID).value;
-    const query = `convert?from=${fromCurrency}&to=${toCurrency}&amount=${amount}`;
-
-    const { result } = await fetchData(query);
-    document.getElementById(RESULT_ID).textContent = result;
-
-    // Remove collapse target from button to keep the card visible from now on
-    document.getElementById(SUBMIT_BTN_ID).dataset.bsToggle = "";
-  }
-};
-
-const initHandleSubmit = () => {
+export const initHandleSubmit = () => {
   const myCollapse = document.getElementById("collapseResult");
   const bsCollapse = new bootstrap.Collapse(myCollapse, {
     toggle: false,
   });
+
+  const handleSubmit = async (event) => {
+    if (event.target?.id === SUBMIT_BTN_ID) {
+      event.preventDefault();
+
+      const amount = document.getElementById(AMOUNT_ID).value;
+
+      if (!amount) {
+        return;
+      }
+
+      // Create query and fetch result
+      const fromCurrency = document.getElementById(FROM_ID).value;
+      const toCurrency = document.getElementById(TO_ID).value;
+      const query = `convert?from=${fromCurrency}&to=${toCurrency}&amount=${amount}`;
+
+      const { result } = await fetchData(query);
+      document.getElementById(
+        RESULT_ID
+      ).innerHTML = String.raw`<h1>${result.toFixed(2)}</h1>`;
+
+      bsCollapse.show();
+    }
+  };
+
+  return handleSubmit;
 };
 
 document.addEventListener("click", handleSwitchCurrencies);
-document.addEventListener("click", handleSubmit);
