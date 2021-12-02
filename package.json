@@ -1,0 +1,21 @@
+{
+  "name": "exchangerateapp",
+  "version": "1.0.0",
+  "description": "## Description",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanijelCvit/exchange-rate-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanijelCvit/exchange-rate-app/issues"
+  },
+  "homepage": "https://github.com/DanijelCvit/exchange-rate-app#readme"
+}
