@@ -35,13 +35,14 @@ export const createForm = () => {
     <div id=${RESULT_ID} class="card card-body">
     </div>
   </div>
-  <button
+  <a
+    href="#"
     id = ${SUBMIT_BTN_ID}
     type="button"
     class="btn btn-primary col-12"
   >
     Submit
-  </button>
+</a>
 </form>
     `;
 };
@@ -77,6 +78,7 @@ export const initHandleSubmit = () => {
       const query = `convert?from=${fromCurrency}&to=${toCurrency}&amount=${amount}`;
 
       const { result } = await fetchData(query);
+      console.log(result);
       document.getElementById(
         RESULT_ID
       ).innerHTML = String.raw`<h1>${result.toFixed(2)}</h1>`;

@@ -3,13 +3,13 @@ import { fetchData } from "../api/index.js";
 export const createOptions = async () => {
   const { symbols } = await fetchData("symbols");
 
-  const currencies = Object.keys(symbols);
+  const currencies = Object.entries(symbols);
 
   let options = "";
-  for (const currency of currencies) {
+  for (const [code, { description }] of currencies) {
     options += String.raw`
-              <option value="${currency}">${currency}</option>
-              `;
+                <option value="${code}">${`${code} - ${description}`}</option>
+                `;
   }
 
   return options;
