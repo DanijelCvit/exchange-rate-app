@@ -20,9 +20,9 @@ The APIs I will be using are :
 
 > these are necessary for basic usability
 
-- [ ] A user can get the latest exchange rate for a selected currency
+- [x] A user can get the latest exchange rate for a selected currency
       in his preferred base currency
-- [ ] A user can convert any amount from one currency to any other available currency
+- [x] A user can convert any amount from one currency to any other available currency
 
 ### Nice-to-Haves
 

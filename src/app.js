@@ -1,6 +1,10 @@
-import { createForm, initHandleSubmit } from "./components/Form.js";
+import {
+  createForm,
+  handleSwitchCurrencies,
+  initHandleSubmit,
+} from "./components/Form.js";
 import { createOptions } from "./components/Options.js";
-import { SUBMIT_BTN_ID } from "./constants.js";
+import { SUBMIT_BTN_ID, SWITCH_CURRENCIES_BTN_ID } from "./constants.js";
 
 const app = async () => {
   const app = document.getElementById("app");
@@ -16,6 +20,11 @@ const app = async () => {
   document
     .getElementById(SUBMIT_BTN_ID)
     .addEventListener("click", handleSubmit);
+
+  // Add event handler to switch currencies button
+  document
+    .getElementById(SWITCH_CURRENCIES_BTN_ID)
+    .addEventListener("click", handleSwitchCurrencies);
 
   // Get all currencies and create options elements
   const optionsTemplate = await createOptions();

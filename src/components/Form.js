@@ -23,6 +23,7 @@ export const createForm = () => {
   </div>
   <div class="mb-3">
     <button id=${SWITCH_CURRENCIES_BTN_ID} type="button" class="btn btn-secondary btn-round">
+    <i class="fas fa-exchange-alt fa-rotate-90"></i>
     </button>
   </div>
   <div class="mb-3">
@@ -47,13 +48,12 @@ export const createForm = () => {
     `;
 };
 
-const handleSwitchCurrencies = (event) => {
-  if (event.target?.id === SWITCH_CURRENCIES_BTN_ID) {
-    const fromElement = document.getElementById(FROM_ID);
-    const toElement = document.getElementById(TO_ID);
+export const handleSwitchCurrencies = () => {
+  console.log("switch");
+  const fromElement = document.getElementById(FROM_ID);
+  const toElement = document.getElementById(TO_ID);
 
-    [fromElement.value, toElement.value] = [toElement.value, fromElement.value];
-  }
+  [fromElement.value, toElement.value] = [toElement.value, fromElement.value];
 };
 
 export const initHandleSubmit = () => {
@@ -88,5 +88,3 @@ export const initHandleSubmit = () => {
 
   return handleSubmit;
 };
-
-document.addEventListener("click", handleSwitchCurrencies);
