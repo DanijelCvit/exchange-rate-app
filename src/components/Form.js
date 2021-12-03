@@ -6,11 +6,12 @@ import {
   SUBMIT_BTN_ID,
   SWITCH_CURRENCIES_BTN_ID,
   RESULT_ID,
+  SHOW_RESULT,
 } from "../constants.js";
 
 export const createForm = () => {
   return String.raw`
- <form class="mt-3 row shadow p-3 mb-5 bg-body">
+ <form class="mt-3 row shadow p-3 mb-5">
   <div class="mb-3 col-md-3">
     <label for="amount" class="form-label fw-bold">Amount</label>
     <div class="input-group input-group-lg">
@@ -68,7 +69,7 @@ export const createForm = () => {
       <option selected>Select a currency</option>
     </select>
   </div>
-  <div class="mb-3 collapse col-12" id="collapseResult">
+  <div class="mb-3 collapse col-12" id=${SHOW_RESULT}>
     <div id="${RESULT_ID}" class="card card-body"></div>
   </div>
   <div class="mb-3 col-12 text-end">
@@ -94,7 +95,7 @@ export const handleSwitchCurrencies = () => {
 };
 
 export const initHandleSubmit = () => {
-  const myCollapse = document.getElementById("collapseResult");
+  const myCollapse = document.getElementById(SHOW_RESULT);
   const bsCollapse = new bootstrap.Collapse(myCollapse, {
     toggle: false,
   });
@@ -104,14 +105,18 @@ export const initHandleSubmit = () => {
       event.preventDefault();
 
       const amount = document.getElementById(AMOUNT_ID).value;
+      const fromCurrency = document.getElementById(FROM_ID).value;
+      const toCurrency = document.getElementById(TO_ID).value;
 
-      if (!amount) {
+      if (
+        !amount ||
+        fromCurrency === "Select a currency" ||
+        toCurrency === "Select a currency"
+      ) {
         return;
       }
 
       // Create query and fetch result
-      const fromCurrency = document.getElementById(FROM_ID).value;
-      const toCurrency = document.getElementById(TO_ID).value;
       const query = `convert?from=${fromCurrency}&to=${toCurrency}&amount=${amount}`;
 
       const { result } = await fetchData(query);

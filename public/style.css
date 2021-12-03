@@ -4,20 +4,59 @@
   margin: 0;
 }
 
+:root {
+  --pink: #d14292;
+  --green: #238648;
+  --light-green: #66c992;
+  --light-blue: #47bfff;
+  --dark-grey: #252525;
+  --dark-yellow: #332a00;
+  --dark-blue: #00264c;
+  --blue: #0080ff;
+  --yellow: #ffcd00;
+  --turquoise: #00cdbf;
+  --green: #34cd8a;
+  --light-grey: #c0c0c0;
+  --orange: #ff7818;
+  --grey: rgba(79, 79, 79);
+}
+
 body {
+  font-family: "Montserrat", sans-serif;
   padding: 0 1rem;
+  /* background-color: black;
+  color: white; */
 }
 
 .btn-round {
   width: 50px;
   height: 50px;
-  background-color: orange;
+  background-color: var(--green);
   border: 0;
 }
-
+/* 
 form {
   border-radius: 15px;
+  background-color: var(--dark-grey);
+  opacity: 1;
 }
+
+option {
+  background-color: var(--grey) !important;
+  color: var(--orange) !important;
+}
+
+select,
+input {
+  background-color: var(--grey) !important;
+  border: none !important;
+  color: white !important;
+}
+
+#submit {
+  background-color: var(--orange);
+  border-color: transparent !important;
+} */
 
 @media screen and (min-width: 768px) {
   #switch-currencies {

@@ -1,3 +1,4 @@
+import { createChart } from "./components/Chart.js";
 import {
   createForm,
   handleSwitchCurrencies,
@@ -26,10 +27,16 @@ const app = async () => {
     .getElementById(SWITCH_CURRENCIES_BTN_ID)
     .addEventListener("click", handleSwitchCurrencies);
 
-  // Get all currencies and create options elements
+  // Get all currencies and create option elements
   const optionsTemplate = await createOptions();
   document.getElementById("from").innerHTML += optionsTemplate;
   document.getElementById("to").innerHTML += optionsTemplate;
+
+  // Show chart
+  const chartTemplate = await createChart();
+
+  // Append to app
+  app.innerHTML += chartTemplate;
 };
 
 window.addEventListener("load", app);
