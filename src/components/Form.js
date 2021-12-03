@@ -13,7 +13,7 @@ export const createForm = () => {
  <form>
   <div class="mb-3">
     <label for="amount" class="form-label">Amount</label>
-    <input type="text" class="form-control" id=${AMOUNT_ID} aria-describedby="" />
+    <input type="text" class="form-control" id=${AMOUNT_ID} value="1.00" aria-describedby="" />
   </div>
   <div class="mb-3">
     <label class="form-label">From</label>
@@ -31,7 +31,7 @@ export const createForm = () => {
       <option selected>Select a currency</option>
     </select>
   </div>
-  <div class="collapse" id="collapseResult">
+  <div class="collapse mb-3" id="collapseResult">
     <div id=${RESULT_ID} class="card card-body">
     </div>
   </div>
@@ -78,7 +78,6 @@ export const initHandleSubmit = () => {
       const query = `convert?from=${fromCurrency}&to=${toCurrency}&amount=${amount}`;
 
       const { result } = await fetchData(query);
-      console.log(result);
       document.getElementById(
         RESULT_ID
       ).innerHTML = String.raw`<h1>${result.toFixed(2)}</h1>`;
