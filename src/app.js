@@ -1,4 +1,3 @@
-import { createChart } from "./components/Chart.js";
 import {
   createForm,
   handleSwitchCurrencies,
@@ -33,10 +32,12 @@ const app = async () => {
   document.getElementById("to").innerHTML += optionsTemplate;
 
   // Show chart
-  const chartTemplate = await createChart();
+  // const chartTemplate = await createChart();
 
-  // Append to app
-  app.innerHTML += chartTemplate;
+  // // Can't user innerHTML here as it will clear existing event handlers
+  // app.insertAdjacentHTML("beforeend", chartTemplate);
+
+  // console.log(chartTemplate);
 };
 
 window.addEventListener("load", app);

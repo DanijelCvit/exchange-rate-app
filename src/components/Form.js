@@ -1,4 +1,5 @@
 import { fetchData } from "../api/index.js";
+import { createChart } from "./Chart.js";
 import {
   FROM_ID,
   TO_ID,
@@ -73,14 +74,13 @@ export const createForm = () => {
     <div id="${RESULT_ID}" class="card card-body"></div>
   </div>
   <div class="mb-3 col-12 text-end">
-    <a
-      href="#"
+    <button
       id="${SUBMIT_BTN_ID}"
-      type="button"
+      type="submit"
       class="btn btn-primary btn-lg col-12 col-md-2"
     >
       Submit
-    </a>
+    </button>
   </div>
 </form>
     `;
@@ -101,31 +101,43 @@ export const initHandleSubmit = () => {
   });
 
   const handleSubmit = async (event) => {
-    if (event.target?.id === SUBMIT_BTN_ID) {
-      event.preventDefault();
+    event.preventDefault();
 
-      const amount = document.getElementById(AMOUNT_ID).value;
-      const fromCurrency = document.getElementById(FROM_ID).value;
-      const toCurrency = document.getElementById(TO_ID).value;
+    const amount = document.getElementById(AMOUNT_ID).value;
+    const fromCurrency = document.getElementById(FROM_ID).value;
+    const toCurrency = document.getElementById(TO_ID).value;
 
-      if (
-        !amount ||
-        fromCurrency === "Select a currency" ||
-        toCurrency === "Select a currency"
-      ) {
-        return;
-      }
-
-      // Create query and fetch result
-      const query = `convert?from=${fromCurrency}&to=${toCurrency}&amount=${amount}`;
-
-      const { result } = await fetchData(query);
-      document.getElementById(
-        RESULT_ID
-      ).innerHTML = String.raw`<h1>${result.toFixed(2)}</h1>`;
-
-      bsCollapse.show();
+    if (
+      !amount ||
+      fromCurrency === "Select a currency" ||
+      toCurrency === "Select a currency"
+    ) {
+      return;
     }
+
+    // Create query and fetch result
+    const query = `convert?from=${fromCurrency}&to=${toCurrency}&amount=${amount}`;
+
+    const { result } = await fetchData(query);
+    document.getElementById(
+      RESULT_ID
+    ).innerHTML = String.raw`<h1>${result.toFixed(2)}</h1>`;
+
+    bsCollapse.show();
+
+    // Fetch chart
+    const chart = {
+      type: "line",
+      data: {
+        labels: [2012, 2013, 2014, 2015, 2016],
+        datasets: [{ label: "USD", data: [120, 60, 50, 180, 120] }],
+      },
+    };
+    // const chartQuery = "";
+    const chartTemplate = await createChart(chart);
+    document
+      .getElementById("app")
+      .insertAdjacentHTML("beforeend", chartTemplate);
   };
 
   return handleSubmit;

@@ -1,27 +1,27 @@
 import { fetchChart } from "../api/index.js";
 
-export const createChart = async () => {
+export const createChart = async (chart) => {
   const quickChart = `https://quickchart.io/chart?c=`;
-  const chart = {
-    type: "line",
-    data: {
-      labels: [2012, 2013, 2014, 2015, 2016],
-      datasets: [{ label: "USD", data: [120, 60, 50, 180, 120] }],
-    },
-  };
+  // const chart = {
+  //   type: "line",
+  //   data: {
+  //     labels: [2012, 2013, 2014, 2015, 2016],
+  //     datasets: [{ label: "USD", data: [120, 60, 50, 180, 120] }],
+  //   },
+  // };
 
   const chartString = JSON.stringify(chart);
-  console.log(chartString);
+  // console.log(chartString);
 
   const query = quickChart + chartString;
 
-  console.log(query);
+  // console.log(query);
 
   const url = await fetchChart(query);
-  console.log(url);
+  // console.log(url);
 
   return String.raw`
-<div class="row shadow p-1 mb-5">
+<div class="row shadow p-1 mb-5 text-center">
   <div
     class="btn-toolbar d-flex justify-content-center mb-3"
     role="toolbar"
