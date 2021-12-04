@@ -1,4 +1,4 @@
-import { fetchData } from "../api/index.js";
+import { fetchChart, fetchData } from "../api/index.js";
 import { createChart } from "./Chart.js";
 import {
   FROM_ID,
@@ -9,6 +9,7 @@ import {
   RESULT_ID,
   SHOW_RESULT,
 } from "../constants.js";
+import { calcDates, createChartData, updateChart } from "../utils.js";
 
 export const createForm = () => {
   return String.raw`
@@ -87,7 +88,6 @@ export const createForm = () => {
 };
 
 export const handleSwitchCurrencies = () => {
-  console.log("switch");
   const fromElement = document.getElementById(FROM_ID);
   const toElement = document.getElementById(TO_ID);
 
@@ -115,8 +115,8 @@ export const initHandleSubmit = () => {
       return;
     }
 
-    // Create query and fetch result
-    const query = `convert?from=${fromCurrency}&to=${toCurrency}&amount=${amount}`;
+    // Create query and fetch converted value
+    let query = `convert?from=${fromCurrency}&to=${toCurrency}&amount=${amount}`;
 
     const { result } = await fetchData(query);
     document.getElementById(
@@ -125,19 +125,24 @@ export const initHandleSubmit = () => {
 
     bsCollapse.show();
 
-    // Fetch chart
-    const chart = {
-      type: "line",
-      data: {
-        labels: [2012, 2013, 2014, 2015, 2016],
-        datasets: [{ label: "USD", data: [120, 60, 50, 180, 120] }],
-      },
-    };
-    // const chartQuery = "";
-    const chartTemplate = await createChart(chart);
-    document
-      .getElementById("app")
-      .insertAdjacentHTML("beforeend", chartTemplate);
+    const app = document.getElementById("app");
+    const chartElement = document.getElementById("chart");
+
+    if (chartElement) {
+      await updateChart(chartElement, { fromCurrency, toCurrency });
+    } else {
+      // Get new dates
+      const [startDate, endDate] = calcDates(7);
+
+      // Get chart data
+      query = `timeseries?start_date=${startDate}&end_date=${endDate}&base=${fromCurrency}&symbols=${toCurrency}`;
+      const { rates } = await fetchData(query);
+
+      const chart = createChartData(rates, toCurrency);
+
+      const chartTemplate = await createChart(chart);
+      app.insertAdjacentHTML("beforeend", chartTemplate);
+    }
   };
 
   return handleSubmit;

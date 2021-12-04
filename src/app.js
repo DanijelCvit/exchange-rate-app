@@ -30,14 +30,6 @@ const app = async () => {
   const optionsTemplate = await createOptions();
   document.getElementById("from").innerHTML += optionsTemplate;
   document.getElementById("to").innerHTML += optionsTemplate;
-
-  // Show chart
-  // const chartTemplate = await createChart();
-
-  // // Can't user innerHTML here as it will clear existing event handlers
-  // app.insertAdjacentHTML("beforeend", chartTemplate);
-
-  // console.log(chartTemplate);
 };
 
 window.addEventListener("load", app);
