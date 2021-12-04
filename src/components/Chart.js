@@ -3,9 +3,10 @@ import { FROM_ID, TO_ID } from "../constants.js";
 import { updateChart } from "../utils.js";
 
 export const createChart = async (chart) => {
-  const url = await fetchChart(chart);
+  try {
+    const url = await fetchChart(chart);
 
-  return String.raw`
+    return String.raw`
 <div id="chart" class="row shadow p-1 mb-5 text-center">
   <div
     class="btn-toolbar d-flex justify-content-center mb-3"
@@ -45,6 +46,16 @@ export const createChart = async (chart) => {
   <div><img class="img-fluid" src="${url}" /></div>
 </div>
   `;
+  } catch (error) {
+    console.log(error);
+
+    return String.raw`
+    <div id="chart" class="row shadow p-1 mb-5 text-center">
+      <p class="mt-3"><i class="fas fa-chart-line fa-5x"></i></p>
+      <p class="text-danger">Something wen't wrong: couldn't fetch chart</p>       
+    </div>
+      `;
+  }
 };
 
 const handleRangeSelect = (e) => {
@@ -52,8 +63,6 @@ const handleRangeSelect = (e) => {
     const chartElement = document.getElementById("chart");
     const fromCurrency = document.getElementById(FROM_ID).value;
     const toCurrency = document.getElementById(TO_ID).value;
-
-    console.log(fromCurrency, toCurrency);
 
     updateChart(chartElement, fromCurrency, toCurrency);
   }
