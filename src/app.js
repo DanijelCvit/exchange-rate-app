@@ -1,10 +1,14 @@
 import {
   createForm,
-  handleSwitchCurrencies,
   initHandleSubmit,
+  handleSwitchCurrencies,
 } from "./components/Form.js";
 import { createOptions } from "./components/Options.js";
-import { SUBMIT_BTN_ID, SWITCH_CURRENCIES_BTN_ID } from "./constants.js";
+import {
+  AMOUNT_ID,
+  SUBMIT_BTN_ID,
+  SWITCH_CURRENCIES_BTN_ID,
+} from "./constants.js";
 
 const app = async () => {
   const app = document.getElementById("app");
@@ -28,8 +32,26 @@ const app = async () => {
 
   // Get all currencies and create option elements
   const optionsTemplate = await createOptions();
-  document.getElementById("from").innerHTML += optionsTemplate;
-  document.getElementById("to").innerHTML += optionsTemplate;
+
+  const fromElement = document.getElementById("from");
+  const toElement = document.getElementById("to");
+
+  fromElement.innerHTML += optionsTemplate;
+  toElement.innerHTML += optionsTemplate;
+
+  // Initialize any local storage data
+  const storedData = localStorage.getItem("exchangeData");
+  if (storedData) {
+    const data = JSON.parse(storedData);
+
+    fromElement.value = data.fromCurrency;
+    toElement.value = data.toCurrency;
+    document.getElementById(AMOUNT_ID).value = data.amount;
+
+    if (localStorage.getItem("shown")) {
+      document.getElementById(SUBMIT_BTN_ID).click();
+    }
+  }
 };
 
 window.addEventListener("load", app);

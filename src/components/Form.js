@@ -1,4 +1,3 @@
-import { fetchChart, fetchData } from "../api/index.js";
 import { createChart } from "./Chart.js";
 import {
   FROM_ID,
@@ -10,6 +9,7 @@ import {
   SHOW_RESULT,
 } from "../constants.js";
 import { calcDates, createChartData, updateChart } from "../utils.js";
+import { createResult } from "./Result.js";
 
 export const createForm = () => {
   return String.raw`
@@ -33,7 +33,6 @@ export const createForm = () => {
       class="form-select form-select-lg"
       aria-label="Default select example"
     >
-      <option selected>Select a currency</option>
     </select>
   </div>
   <div
@@ -68,7 +67,6 @@ export const createForm = () => {
       class="form-select form-select-lg"
       aria-label="Default select example"
     >
-      <option selected>Select a currency</option>
     </select>
   </div>
   <div class="mb-3 collapse col-12" id=${SHOW_RESULT}>
@@ -92,6 +90,8 @@ export const handleSwitchCurrencies = () => {
   const toElement = document.getElementById(TO_ID);
 
   [fromElement.value, toElement.value] = [toElement.value, fromElement.value];
+
+  saveChanges();
 };
 
 export const initHandleSubmit = () => {
@@ -100,50 +100,81 @@ export const initHandleSubmit = () => {
     toggle: false,
   });
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     const amount = document.getElementById(AMOUNT_ID).value;
     const fromCurrency = document.getElementById(FROM_ID).value;
     const toCurrency = document.getElementById(TO_ID).value;
 
-    if (
-      !amount ||
-      fromCurrency === "Select a currency" ||
-      toCurrency === "Select a currency"
-    ) {
+    if (!amount) {
       return;
     }
 
-    // Create query and fetch converted value
-    let query = `convert?from=${fromCurrency}&to=${toCurrency}&amount=${amount}`;
+    // Create result element
+    await createResult(fromCurrency, toCurrency, amount);
 
-    const { result } = await fetchData(query);
-    document.getElementById(
-      RESULT_ID
-    ).innerHTML = String.raw`<h1>${result.toFixed(2)}</h1>`;
+    // Show result element
+    if (!bsCollapse._element.classList.contains("show")) {
+      bsCollapse.show();
+    }
 
-    bsCollapse.show();
-
+    // Update existing chart or create new one
     const app = document.getElementById("app");
     const chartElement = document.getElementById("chart");
 
     if (chartElement) {
-      await updateChart(chartElement, { fromCurrency, toCurrency });
+      await updateChart(chartElement, fromCurrency, toCurrency);
     } else {
-      // Get new dates
       const [startDate, endDate] = calcDates(7);
 
-      // Get chart data
-      query = `timeseries?start_date=${startDate}&end_date=${endDate}&base=${fromCurrency}&symbols=${toCurrency}`;
-      const { rates } = await fetchData(query);
-
-      const chart = createChartData(rates, toCurrency);
+      const chart = await createChartData(
+        startDate,
+        endDate,
+        fromCurrency,
+        toCurrency
+      );
 
       const chartTemplate = await createChart(chart);
       app.insertAdjacentHTML("beforeend", chartTemplate);
     }
+
+    localStorage.setItem("shown", "true");
   };
 
   return handleSubmit;
 };
+
+const handleChanges = (e) => {
+  if (
+    e.target?.id === FROM_ID ||
+    e.target?.id === TO_ID ||
+    e.target?.id === AMOUNT_ID
+  ) {
+    saveChanges();
+  }
+};
+
+// Story any changes to local storage
+const saveChanges = () => {
+  const amountElement = document.getElementById(AMOUNT_ID);
+  const fromElement = document.getElementById(FROM_ID);
+  const toElement = document.getElementById(TO_ID);
+
+  const data = {
+    amount: amountElement.value,
+    fromCurrency: fromElement.value,
+    toCurrency: toElement.value,
+  };
+
+  const storedData = JSON.stringify(data);
+
+  localStorage.setItem("exchangeData", storedData);
+
+  // Resubmit on any changes after first submit
+  if (localStorage.getItem("shown")) {
+    document.getElementById(SUBMIT_BTN_ID).click();
+  }
+};
+
+document.addEventListener("change", handleChanges);

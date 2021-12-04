@@ -14,7 +14,16 @@ export const calcDates = (interval) => {
   return [startDate, endDate];
 };
 
-export const createChartData = (rates, toCurrency) => {
+export const createChartData = async (
+  startDate,
+  endDate,
+  fromCurrency,
+  toCurrency
+) => {
+  // Get chart data
+  const query = `timeseries?start_date=${startDate}&end_date=${endDate}&base=${fromCurrency}&symbols=${toCurrency}`;
+  const { rates } = await fetchData(query);
+
   // Destructure date strings and set to short form
   let labels = Object.keys(rates).map((date) =>
     new Date(date).toLocaleDateString("en-US", {
@@ -34,7 +43,7 @@ export const createChartData = (rates, toCurrency) => {
   // Set Y-axis range
   const minValue = Math.min(...data);
   const maxValue = Math.max(...data);
-  const stepSize = (maxValue - minValue) / 5;
+  const stepSize = (maxValue - minValue) / 10;
 
   // Create chart
   const chart = {
@@ -50,7 +59,7 @@ export const createChartData = (rates, toCurrency) => {
               ticks: {
                 min: minValue,
                 max: maxValue,
-                stepSize: 2000,
+                stepSize: stepSize,
               },
             },
           ],
@@ -62,18 +71,18 @@ export const createChartData = (rates, toCurrency) => {
   return chart;
 };
 
-export const updateChart = async (chartElement, currencies) => {
+export const updateChart = async (chartElement, fromCurrency, toCurrency) => {
   const chartRange = chartElement.querySelectorAll("input[type='radio']");
   const [selectedRange] = [...chartRange].filter((input) => input.checked);
 
   const [startDate, endDate] = calcDates(parseInt(selectedRange.id));
 
-  // Get chart data
-  const { fromCurrency, toCurrency } = currencies;
-  const query = `timeseries?start_date=${startDate}&end_date=${endDate}&base=${fromCurrency}&symbols=${toCurrency}`;
-  const { rates } = await fetchData(query);
-
-  const chart = createChartData(rates, toCurrency);
+  const chart = await createChartData(
+    startDate,
+    endDate,
+    fromCurrency,
+    toCurrency
+  );
   const url = await fetchChart(chart);
   const imgElement = app.querySelector("img");
   imgElement.src = url;
