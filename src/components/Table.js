@@ -1,28 +1,9 @@
 import { AMOUNT_ID, SAVE_BTN_ID } from "../constants.js";
 
 export const createTable = () => {
-  let rowArray = [];
-
-  // Create row array where to store future rows
   if (!localStorage.getItem("rows")) {
-    const rows = { rowArray };
+    const rows = { rowArray: [] };
     localStorage.setItem("rows", JSON.stringify(rows));
-  } else {
-    const rowsString = localStorage.getItem("rows");
-    const rowsData = JSON.parse(rowsString);
-    rowArray = rowsData.rowArray;
-  }
-
-  let rowsTemplate = "";
-  for (let i = 0; i < rowArray.length; i++) {
-    rowsTemplate += String.raw`${createTableRow(
-      {
-        fromCurrency: rowArray[i].fromCurrency,
-        toCurrency: rowArray[i].toCurrency,
-      },
-      rowArray[i].rate,
-      rowArray[i].id
-    )}`;
   }
 
   return String.raw`
@@ -39,7 +20,7 @@ export const createTable = () => {
     </tr>
   </thead>
   <tbody>
-    ${rowsTemplate}
+    ${updateTableRows()}
   </tbody>
 </table>
 </div>
@@ -92,9 +73,14 @@ export const addTableRow = () => {
 };
 
 export const deleteTableRow = (e) => {
-  if (!e.target.classList.contains("fa-trash-alt")) {
+  if (
+    !e.target.classList.contains("fa-trash-alt") &&
+    !e.target.classList.contains("btn")
+  ) {
     return;
   }
+
+  console.log("hello");
 
   const currentRow = e.currentTarget;
   const saveButton = document.getElementById(SAVE_BTN_ID);
@@ -104,14 +90,40 @@ export const deleteTableRow = (e) => {
   let { rowArray } = JSON.parse(rowsString);
 
   // Remove deleted row
-  rowArray = rowArray.filter((row) => row.id !== +currentRow.id);
+  rowArray = rowArray.filter((row, index) => index + 1 !== +currentRow.id);
   localStorage.setItem("rows", JSON.stringify({ rowArray }));
 
-  currentRow.remove();
+  const tableRowsTemplate = updateTableRows();
+  const tableBodyElement = document.querySelector("table tbody");
+
+  tableBodyElement.innerHTML = "";
+  tableBodyElement.insertAdjacentHTML("afterbegin", tableRowsTemplate);
+
+  // innerHTML clears event handlers, re-adding them here
+  document
+    .querySelectorAll("table tbody tr")
+    .forEach((row) => row.addEventListener("click", deleteTableRow));
 
   if (saveButton.disabled) {
     saveButton.disabled = false;
   }
 };
 
-export const restoreTableRows = () => {};
+export const updateTableRows = () => {
+  const rowsString = localStorage.getItem("rows");
+  const rowsData = JSON.parse(rowsString);
+  const { rowArray } = rowsData;
+
+  let rowsTemplate = "";
+  for (let i = 0; i < rowArray.length; i++) {
+    rowsTemplate += String.raw`${createTableRow(
+      {
+        fromCurrency: rowArray[i].fromCurrency,
+        toCurrency: rowArray[i].toCurrency,
+      },
+      rowArray[i].rate,
+      i + 1
+    )}`;
+  }
+  return rowsTemplate;
+};
