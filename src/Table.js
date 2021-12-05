@@ -1,6 +1,10 @@
-import { AMOUNT_ID } from "./constants.js";
+import { AMOUNT_ID, SAVE_BTN_ID } from "./constants.js";
 
 export const createTable = () => {
+  // Create row array where to store future rows
+  const rows = { rowArray: [] };
+  localStorage.setItem("rows", JSON.stringify(rows));
+
   return String.raw`
 <div class="row shadow mb-5 p-2">
 <table class="table table-hover align-items-center mt-3">
@@ -45,9 +49,7 @@ export const createTable = () => {
     `;
 };
 
-const createTableRow = (data, rate) => {
-  const newId = document.querySelectorAll("table tbody tr").length + 1;
-
+const createTableRow = (data, rate, newId) => {
   return String.raw`
      <tr id="table-row-${newId}">
       <th scope="row">${newId}</th>
@@ -61,12 +63,29 @@ const createTableRow = (data, rate) => {
 };
 
 export const addTableRow = () => {
+  const newId = document.querySelectorAll("table tbody tr").length + 1;
+
+  if (newId === 10) {
+    document.getElementById(SAVE_BTN_ID).disabled = true;
+  }
+
   const storedData = localStorage.getItem("exchangeData");
   const data = JSON.parse(storedData);
   const rate = localStorage.getItem("rate");
 
+  // Save data in local storage
+  const rowsString = localStorage.getItem("rows");
+  const rowsData = JSON.parse(rowsString);
+  rowsData.rowArray.push({
+    fromCurrency: data.fromCurrency,
+    toCurrency: data.toCurrency,
+    rate,
+  });
+
+  localStorage.setItem("rows", JSON.stringify(rowsData));
+
   const tableBodyElement = document.querySelector("table tbody");
-  const tableRowTemplate = createTableRow(data, rate);
+  const tableRowTemplate = createTableRow(data, rate, newId);
   tableBodyElement.insertAdjacentHTML("beforeend", tableRowTemplate);
 
   const rowArray = document.querySelectorAll("table tbody tr");
@@ -74,5 +93,13 @@ export const addTableRow = () => {
 };
 
 export const deleteTableRow = (e) => {
+  const saveButton = document.getElementById(SAVE_BTN_ID);
+
   e.currentTarget.remove();
+
+  if (saveButton.disabled) {
+    saveButton.disabled = false;
+  }
 };
+
+export const restoreTableRows = () => {};

@@ -91,3 +91,8 @@ export const updateChart = async (chartElement, fromCurrency, toCurrency) => {
   const imgElement = app.querySelector("img");
   imgElement.src = url;
 };
+
+// export const saveToLocalStorage = (key, data) => {
+//     const value = JSON.stringify(data);
+//     localStorage.setItem(key, value);
+// }
