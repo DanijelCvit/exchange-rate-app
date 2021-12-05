@@ -40,30 +40,34 @@ export const createChartData = async (
     labels = labels.filter((value, index) => index % DATASET_DIVIDER === 0);
   }
 
-  // Set Y-axis range
-  const minValue = Math.min(...data);
-  const maxValue = Math.max(...data);
-  const stepSize = (maxValue - minValue) / 10;
-
-  // Create chart
   const chart = {
     type: "line",
     data: {
       labels: labels,
-      datasets: [{ label: toCurrency, data: data }],
-      options: {
-        responsive: true,
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                min: minValue,
-                max: maxValue,
-                stepSize: stepSize,
-              },
-            },
-          ],
+      datasets: [
+        {
+          label: `${toCurrency}`,
+          backgroundColor: "rgba(255, 255, 255, 0)",
+          borderColor: "rgba(13, 110, 253, 1)",
+          data: data,
         },
+      ],
+    },
+    options: {
+      responsive: true,
+      title: {
+        display: true,
+        text: `${fromCurrency} to ${toCurrency}`,
+      },
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              // suggestedMin/Max will always make sure the data fits.
+              // Use 'min' and 'max to force the axis range.
+            },
+          },
+        ],
       },
     },
   };
