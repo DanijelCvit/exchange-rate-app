@@ -9,9 +9,16 @@ import {
   SUBMIT_BTN_ID,
   SWITCH_CURRENCIES_BTN_ID,
 } from "./constants.js";
+import { createHeader } from "./Header.js";
 
 const app = async () => {
   const app = document.getElementById("app");
+
+  // Create header
+  const headerTemplate = createHeader();
+
+  // Add header to app
+  app.innerHTML += headerTemplate;
 
   // Create form element
   const formTemplate = createForm();
