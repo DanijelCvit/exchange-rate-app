@@ -6,3 +6,4 @@ export const SUBMIT_BTN_ID = "submit";
 export const RESULT_ID = "result";
 export const SHOW_RESULT = "collapseResult";
 export const SAVE_BTN_ID = "save";
+export const RATE_ID = "rate";

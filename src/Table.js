@@ -1,3 +1,5 @@
+import { AMOUNT_ID } from "./constants.js";
+
 export const createTable = () => {
   return String.raw`
 <div class="row shadow mb-5 p-2">
@@ -41,4 +43,36 @@ export const createTable = () => {
 </div>
 
     `;
+};
+
+const createTableRow = (data, rate) => {
+  const newId = document.querySelectorAll("table tbody tr").length + 1;
+
+  return String.raw`
+     <tr id="table-row-${newId}">
+      <th scope="row">${newId}</th>
+      <td>${data.fromCurrency}</td>
+      <td>${data.toCurrency}</td>
+      <td>${rate}</td>
+      <td><button class="btn btn-secondary"><i class="far fa-trash-alt"></i></button></td>
+
+    </tr>
+  `;
+};
+
+export const addTableRow = () => {
+  const storedData = localStorage.getItem("exchangeData");
+  const data = JSON.parse(storedData);
+  const rate = localStorage.getItem("rate");
+
+  const tableBodyElement = document.querySelector("table tbody");
+  const tableRowTemplate = createTableRow(data, rate);
+  tableBodyElement.insertAdjacentHTML("beforeend", tableRowTemplate);
+
+  const rowArray = document.querySelectorAll("table tbody tr");
+  rowArray[rowArray.length - 1].addEventListener("click", deleteTableRow);
+};
+
+export const deleteTableRow = (e) => {
+  e.currentTarget.remove();
 };

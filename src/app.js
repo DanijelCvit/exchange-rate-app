@@ -8,8 +8,10 @@ import {
   AMOUNT_ID,
   SUBMIT_BTN_ID,
   SWITCH_CURRENCIES_BTN_ID,
+  SAVE_BTN_ID,
 } from "./constants.js";
 import { createHeader } from "./Header.js";
+import { addTableRow } from "./Table.js";
 
 const app = async () => {
   const app = document.getElementById("app");
@@ -37,6 +39,11 @@ const app = async () => {
     document
       .getElementById(SWITCH_CURRENCIES_BTN_ID)
       .addEventListener("click", handleSubmit);
+
+    submitButton.style.display = "none";
+    const saveButton = document.getElementById(SAVE_BTN_ID);
+    saveButton.style.display = "block";
+    saveButton.addEventListener("click", addTableRow);
   });
 
   // Add event handler to switch currencies button

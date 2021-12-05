@@ -11,7 +11,7 @@ import {
 } from "../constants.js";
 import { calcDates, createChartData, updateChart } from "../utils.js";
 import { createResult } from "./Result.js";
-import { createTable } from "../Table.js";
+import { addTableRow, createTable } from "../Table.js";
 
 export const createForm = () => {
   return String.raw`
@@ -120,7 +120,6 @@ export const initHandleSubmit = () => {
     }
 
     // Hide submit button, show save button
-    hideSubmit();
 
     // Create result element
     await createResult(fromCurrency, toCurrency, amount);
@@ -182,18 +181,4 @@ const saveChanges = () => {
   const storedData = JSON.stringify(data);
 
   localStorage.setItem("exchangeData", storedData);
-};
-
-export const handleSave = () => {
-  console.log("saved...");
-};
-
-export const hideSubmit = () => {
-  // Resubmit on any changes after first submit
-  const submitButton = document.getElementById(SUBMIT_BTN_ID);
-  const saveButton = document.getElementById(SAVE_BTN_ID);
-
-  submitButton.style.display = "none";
-  saveButton.style.display = "block";
-  saveButton.addEventListener("click", handleSave);
 };
