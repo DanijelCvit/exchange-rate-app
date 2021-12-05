@@ -10,8 +10,8 @@ import {
   SWITCH_CURRENCIES_BTN_ID,
   SAVE_BTN_ID,
 } from "./constants.js";
-import { createHeader } from "./Header.js";
-import { addTableRow } from "./Table.js";
+import { createHeader } from "./components/Header.js";
+import { addTableRow } from "./components/Table.js";
 
 const app = async () => {
   const app = document.getElementById("app");

@@ -11,7 +11,7 @@ import {
 } from "../constants.js";
 import { calcDates, createChartData, updateChart } from "../utils.js";
 import { createResult } from "./Result.js";
-import { addTableRow, createTable } from "../Table.js";
+import { addTableRow, createTable, deleteTableRow } from "./Table.js";
 
 export const createForm = () => {
   return String.raw`
@@ -151,12 +151,12 @@ export const initHandleSubmit = () => {
 
     // Update or create history table
     const tableElement = document.querySelector("table");
-    if (tableElement) {
-      // Update table
-      console.log("updating table...");
-    } else {
+    if (!tableElement) {
       const tableTemplate = createTable();
       app.insertAdjacentHTML("beforeend", tableTemplate);
+      document
+        .querySelectorAll("table tbody tr")
+        .forEach((row) => row.addEventListener("click", deleteTableRow));
     }
 
     // Use this value to check if data has been submitted

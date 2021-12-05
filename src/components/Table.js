@@ -1,9 +1,29 @@
-import { AMOUNT_ID, SAVE_BTN_ID } from "./constants.js";
+import { AMOUNT_ID, SAVE_BTN_ID } from "../constants.js";
 
 export const createTable = () => {
+  let rowArray = [];
+
   // Create row array where to store future rows
-  const rows = { rowArray: [] };
-  localStorage.setItem("rows", JSON.stringify(rows));
+  if (!localStorage.getItem("rows")) {
+    const rows = { rowArray };
+    localStorage.setItem("rows", JSON.stringify(rows));
+  } else {
+    const rowsString = localStorage.getItem("rows");
+    const rowsData = JSON.parse(rowsString);
+    rowArray = rowsData.rowArray;
+  }
+
+  let rowsTemplate = "";
+  for (let i = 0; i < rowArray.length; i++) {
+    rowsTemplate += String.raw`${createTableRow(
+      {
+        fromCurrency: rowArray[i].fromCurrency,
+        toCurrency: rowArray[i].toCurrency,
+      },
+      rowArray[i].rate,
+      rowArray[i].id
+    )}`;
+  }
 
   return String.raw`
 <div class="row shadow mb-5 p-2">
@@ -19,29 +39,7 @@ export const createTable = () => {
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td><a class="btn btn-secondary" href="#"><i class="far fa-trash-alt"></i></a></td>
-
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td><a class="btn btn-secondary" href="#"><i class="far fa-trash-alt"></i></a></td>
-
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-      <td><a class="btn btn-secondary" href="#"><i class="far fa-trash-alt"></i></a></td>
-
-    </tr>
+    ${rowsTemplate}
   </tbody>
 </table>
 </div>
@@ -51,7 +49,7 @@ export const createTable = () => {
 
 const createTableRow = (data, rate, newId) => {
   return String.raw`
-     <tr id="table-row-${newId}">
+     <tr id="${newId}">
       <th scope="row">${newId}</th>
       <td>${data.fromCurrency}</td>
       <td>${data.toCurrency}</td>
@@ -80,6 +78,7 @@ export const addTableRow = () => {
     fromCurrency: data.fromCurrency,
     toCurrency: data.toCurrency,
     rate,
+    id: newId,
   });
 
   localStorage.setItem("rows", JSON.stringify(rowsData));
@@ -93,9 +92,22 @@ export const addTableRow = () => {
 };
 
 export const deleteTableRow = (e) => {
+  if (!e.target.classList.contains("fa-trash-alt")) {
+    return;
+  }
+
+  const currentRow = e.currentTarget;
   const saveButton = document.getElementById(SAVE_BTN_ID);
 
-  e.currentTarget.remove();
+  // Get saved rows from local storage
+  const rowsString = localStorage.getItem("rows");
+  let { rowArray } = JSON.parse(rowsString);
+
+  // Remove deleted row
+  rowArray = rowArray.filter((row) => row.id !== +currentRow.id);
+  localStorage.setItem("rows", JSON.stringify({ rowArray }));
+
+  currentRow.remove();
 
   if (saveButton.disabled) {
     saveButton.disabled = false;
