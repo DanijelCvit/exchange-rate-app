@@ -133,21 +133,21 @@ export const initHandleSubmit = () => {
     const app = document.getElementById("app");
     const chartElement = document.getElementById("chart");
 
-    // if (chartElement) {
-    //   await updateChart(chartElement, fromCurrency, toCurrency);
-    // } else {
-    //   const [startDate, endDate] = calcDates(7);
+    if (chartElement) {
+      await updateChart(chartElement, fromCurrency, toCurrency);
+    } else {
+      const [startDate, endDate] = calcDates(7);
 
-    //   const chart = await createChartData(
-    //     startDate,
-    //     endDate,
-    //     fromCurrency,
-    //     toCurrency
-    //   );
+      const chart = await createChartData(
+        startDate,
+        endDate,
+        fromCurrency,
+        toCurrency
+      );
 
-    //   const chartTemplate = await createChart(chart);
-    //   app.insertAdjacentHTML("beforeend", chartTemplate);
-    // }
+      const chartTemplate = await createChart(chart);
+      app.insertAdjacentHTML("beforeend", chartTemplate);
+    }
 
     // Update or create history table
     const tableElement = document.querySelector("table");
