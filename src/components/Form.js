@@ -74,7 +74,7 @@ export const createForm = () => {
   <div class="mb-3 collapse col-12" id=${SHOW_RESULT}>
     <div id="${RESULT_ID}" class="card card-body"></div>
   </div>
-  <div class="mb-3 col-12 text-end">
+  <div class="mb-3 col-12 position d-flex justify-content-end">
     <button
       id="${SUBMIT_BTN_ID}"
       type="submit"
@@ -84,7 +84,7 @@ export const createForm = () => {
     </button>
     <button
       id="${SAVE_BTN_ID}"
-      type="submit"
+      type="save"
       class="btn btn-hidden btn-secondary btn-lg col-12 col-md-2"
     >
       Save
@@ -95,12 +95,11 @@ export const createForm = () => {
 };
 
 export const handleSwitchCurrencies = () => {
+  console.log("hello");
   const fromElement = document.getElementById(FROM_ID);
   const toElement = document.getElementById(TO_ID);
 
   [fromElement.value, toElement.value] = [toElement.value, fromElement.value];
-
-  saveChanges();
 };
 
 export const initHandleSubmit = () => {
@@ -135,21 +134,21 @@ export const initHandleSubmit = () => {
     const app = document.getElementById("app");
     const chartElement = document.getElementById("chart");
 
-    if (chartElement) {
-      await updateChart(chartElement, fromCurrency, toCurrency);
-    } else {
-      const [startDate, endDate] = calcDates(7);
+    // if (chartElement) {
+    //   await updateChart(chartElement, fromCurrency, toCurrency);
+    // } else {
+    //   const [startDate, endDate] = calcDates(7);
 
-      const chart = await createChartData(
-        startDate,
-        endDate,
-        fromCurrency,
-        toCurrency
-      );
+    //   const chart = await createChartData(
+    //     startDate,
+    //     endDate,
+    //     fromCurrency,
+    //     toCurrency
+    //   );
 
-      const chartTemplate = await createChart(chart);
-      app.insertAdjacentHTML("beforeend", chartTemplate);
-    }
+    //   const chartTemplate = await createChart(chart);
+    //   app.insertAdjacentHTML("beforeend", chartTemplate);
+    // }
 
     // Update or create history table
     const tableElement = document.querySelector("table");
@@ -168,14 +167,9 @@ export const initHandleSubmit = () => {
   return handleSubmit;
 };
 
-const handleChanges = (e) => {
-  if (
-    e.target?.id === FROM_ID ||
-    e.target?.id === TO_ID ||
-    e.target?.id === AMOUNT_ID
-  ) {
-    saveChanges();
-  }
+export const handleChanges = () => {
+  console.log("hmmm...");
+  document.getElementById(SUBMIT_BTN_ID).click();
 };
 
 // Story any changes to local storage
@@ -208,5 +202,3 @@ export const hideSubmit = () => {
   saveButton.style.display = "block";
   saveButton.addEventListener("click", handleSave);
 };
-
-document.addEventListener("change", handleChanges);

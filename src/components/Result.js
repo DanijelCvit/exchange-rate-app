@@ -8,7 +8,7 @@ export const createResult = async (fromCurrency, toCurrency, amount) => {
 
     // Style fractions after first 2 decimals to grey
     const roundedResult = result.toPrecision(8);
-    const [integer, fraction] = roundedResult.split(".");
+    const [integer, fraction = "00"] = roundedResult.split(".");
     let fractionRight = fraction.slice(2);
     let fractionLeft = fraction.slice(0, 2);
 
