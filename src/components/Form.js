@@ -167,11 +167,6 @@ export const initHandleSubmit = () => {
   return handleSubmit;
 };
 
-export const handleChanges = () => {
-  console.log("hmmm...");
-  document.getElementById(SUBMIT_BTN_ID).click();
-};
-
 // Story any changes to local storage
 const saveChanges = () => {
   const amountElement = document.getElementById(AMOUNT_ID);

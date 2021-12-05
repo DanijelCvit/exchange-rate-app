@@ -2,7 +2,6 @@ import {
   createForm,
   initHandleSubmit,
   handleSwitchCurrencies,
-  handleChanges,
 } from "./components/Form.js";
 import { createOptions } from "./components/Options.js";
 import {
@@ -34,10 +33,10 @@ const app = async () => {
 
   // Add event handlers to form elements after submit
   submitButton.addEventListener("click", () => {
-    document.querySelector("form").addEventListener("change", handleChanges);
+    document.querySelector("form").addEventListener("change", handleSubmit);
     document
       .getElementById(SWITCH_CURRENCIES_BTN_ID)
-      .addEventListener("click", handleChanges);
+      .addEventListener("click", handleSubmit);
   });
 
   // Add event handler to switch currencies button
@@ -64,7 +63,7 @@ const app = async () => {
     document.getElementById(AMOUNT_ID).value = data.amount;
 
     document.getElementById(SUBMIT_BTN_ID).click();
-    document.querySelector("form").addEventListener("change", handleChanges);
+    document.querySelector("form").addEventListener("change", handleSubmit);
   }
 };
 
