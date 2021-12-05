@@ -84,7 +84,7 @@ export const createForm = () => {
     </button>
     <button
       id="${SAVE_BTN_ID}"
-      type="save"
+      type="button"
       class="btn btn-hidden btn-secondary btn-lg col-12 col-md-2"
     >
       Save
