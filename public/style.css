@@ -24,8 +24,6 @@
 body {
   font-family: "Montserrat", sans-serif;
   padding: 0 1rem;
-  /* background-color: black;
-  color: white; */
 }
 
 .btn-round {
@@ -34,29 +32,10 @@ body {
   background-color: var(--green);
   border: 0;
 }
-/* 
-form {
-  border-radius: 15px;
-  background-color: var(--dark-grey);
-  opacity: 1;
-}
 
-option {
-  background-color: var(--grey) !important;
-  color: var(--orange) !important;
+.btn-hidden {
+  display: none;
 }
-
-select,
-input {
-  background-color: var(--grey) !important;
-  border: none !important;
-  color: white !important;
-}
-
-#submit {
-  background-color: var(--orange);
-  border-color: transparent !important;
-} */
 
 @media screen and (min-width: 768px) {
   #switch-currencies {

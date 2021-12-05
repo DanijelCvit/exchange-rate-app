@@ -2,10 +2,13 @@ import {
   createForm,
   initHandleSubmit,
   handleSwitchCurrencies,
+  handleSave,
+  hideSubmit,
 } from "./components/Form.js";
 import { createOptions } from "./components/Options.js";
 import {
   AMOUNT_ID,
+  SAVE_BTN_ID,
   SUBMIT_BTN_ID,
   SWITCH_CURRENCIES_BTN_ID,
 } from "./constants.js";
@@ -55,9 +58,7 @@ const app = async () => {
     toElement.value = data.toCurrency;
     document.getElementById(AMOUNT_ID).value = data.amount;
 
-    if (localStorage.getItem("shown")) {
-      document.getElementById(SUBMIT_BTN_ID).click();
-    }
+    document.getElementById(SUBMIT_BTN_ID).click();
   }
 };
 

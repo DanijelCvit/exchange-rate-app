@@ -6,7 +6,7 @@ The goal of this project will be to build a small exchange rate app. The user sh
 
 ## Brand
 
-The brand I will be basing my design off of will be [bunq](https://www.bunq.com/)
+The brand I will be basing my design off of will be [Adyen](https://www.adyen.com/)
 
 ## Backlog
 
@@ -28,7 +28,7 @@ The APIs I will be using are :
 
 > if time, add more features!
 
-- [ ] A user can view the historical data (e.g. day, month, year) as a chart
+- [x] A user can view the historical data (e.g. day, month, year) as a chart
 - [ ] A user can create a list of currencies to track, which are shown when the app is loaded
 
 ### Would-be-cool

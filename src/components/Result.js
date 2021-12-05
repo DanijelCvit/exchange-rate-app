@@ -16,7 +16,6 @@ export const createResult = async (fromCurrency, toCurrency, amount) => {
       fractionLeft = fraction;
       fractionRight = "";
     }
-    console.log(roundedResult);
 
     const exchangeRate = roundedResult / amount;
     const inverseExchangeRate = (1 / exchangeRate).toPrecision(8);

@@ -7,9 +7,11 @@ import {
   SWITCH_CURRENCIES_BTN_ID,
   RESULT_ID,
   SHOW_RESULT,
+  SAVE_BTN_ID,
 } from "../constants.js";
 import { calcDates, createChartData, updateChart } from "../utils.js";
 import { createResult } from "./Result.js";
+import { createTable } from "../Table.js";
 
 export const createForm = () => {
   return String.raw`
@@ -80,6 +82,13 @@ export const createForm = () => {
     >
       Submit
     </button>
+    <button
+      id="${SAVE_BTN_ID}"
+      type="submit"
+      class="btn btn-hidden btn-secondary btn-lg col-12 col-md-2"
+    >
+      Save
+    </button>
   </div>
 </form>
     `;
@@ -111,6 +120,9 @@ export const initHandleSubmit = () => {
       return;
     }
 
+    // Hide submit button, show save button
+    hideSubmit();
+
     // Create result element
     await createResult(fromCurrency, toCurrency, amount);
 
@@ -139,7 +151,18 @@ export const initHandleSubmit = () => {
       app.insertAdjacentHTML("beforeend", chartTemplate);
     }
 
-    localStorage.setItem("shown", "true");
+    // Update or create history table
+    const tableElement = document.querySelector("table");
+    if (tableElement) {
+      // Update table
+      console.log("updating table...");
+    } else {
+      const tableTemplate = createTable();
+      app.insertAdjacentHTML("beforeend", tableTemplate);
+    }
+
+    // Use this value to check if data has been submitted
+    saveChanges();
   };
 
   return handleSubmit;
@@ -170,11 +193,20 @@ const saveChanges = () => {
   const storedData = JSON.stringify(data);
 
   localStorage.setItem("exchangeData", storedData);
+};
 
+export const handleSave = () => {
+  console.log("saved...");
+};
+
+export const hideSubmit = () => {
   // Resubmit on any changes after first submit
-  if (localStorage.getItem("shown")) {
-    document.getElementById(SUBMIT_BTN_ID).click();
-  }
+  const submitButton = document.getElementById(SUBMIT_BTN_ID);
+  const saveButton = document.getElementById(SAVE_BTN_ID);
+
+  submitButton.style.display = "none";
+  saveButton.style.display = "block";
+  saveButton.addEventListener("click", handleSave);
 };
 
 document.addEventListener("change", handleChanges);
