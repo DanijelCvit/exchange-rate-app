@@ -20,7 +20,7 @@ export const createForm = () => {
     <label for="amount" class="form-label fw-bold">Amount</label>
     <div class="input-group input-group-lg">
       <input
-        type="text"
+        type="number"
         class="form-control form-input-lg"
         id="${AMOUNT_ID}"
         value="1.00"
@@ -114,7 +114,7 @@ export const initHandleSubmit = () => {
     const fromCurrency = document.getElementById(FROM_ID).value;
     const toCurrency = document.getElementById(TO_ID).value;
 
-    if (!amount) {
+    if (!parseInt(amount) || isNaN(parseInt(amount))) {
       return;
     }
 

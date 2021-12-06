@@ -4,7 +4,48 @@
 
 [DEMO](https://danijelcvit.github.io/exchange-rate-app/)
 
-The goal of this project will be to build a small exchange rate app. The user should be able to track the latest currency values expressed in their selected base currency (e.g. most recent value of the 1 EUR expressed in USD). Also it should be possible to convert any amount from one currency into another currency based on the current rate. Finally some historical data (day, month, etc.) could be shown as a chart.
+The goal of this project is to build a small exchange rate app. The user should be able to track the latest currency values expressed in their selected base currency (e.g. most recent value of the 1 EUR expressed in USD). Also it should be possible to convert any amount from one currency into another currency based on the current rate. Finally some historical data (day, month, etc.) could be shown as a chart.
+
+## Development
+
+To run this project locally you will need to open `index.html` in your browser using a local server. LiveServer, `http-server`, `study-lenses`, or any other local static server will work.
+
+## Structure
+
+Let's run through the folders:
+
+```
+.
+├── public
+│   ├── fakt-pro-fonts/
+│   ├── logo7.png
+│   └── style.css
+│
+├── src
+│   ├── api
+│   │   └── index.js
+│   ├── components
+│   │   ├── Chart.js
+│   │   ├── Footer.js
+│   │   ├── Form.js
+│   │   ├── Header.js
+│   │   ├── Options.js
+│   │   ├── Result.js
+│   │   └── Table.js
+│   ├── app.js
+│   ├── constants.js
+│   └── utils.js
+├── index.html
+├── package.json
+└── README.md
+
+```
+
+- `public` this contains the static files (images, stylesheets) that can be used by our `index.html` file
+- `src` this contains all of our JavaScript code
+  - `api` this contains the fetch functions that will get the API data that we need
+  - `components` all the separate parts of the page that we need to render
+  - `app.js` this is the main function that generates the page
 
 ## Brand
 
@@ -13,6 +54,7 @@ The brand I will be basing my design off of will be [Adyen](https://www.adyen.co
 ## Backlog
 
 Below is a list of my must haves and nice to haves for this project.
+
 The APIs I will be using are :
 
 - [Exchangerate.host](https://exchangerate.host/) (main)
@@ -31,12 +73,4 @@ The APIs I will be using are :
 > if time, add more features!
 
 - [x] A user can view the historical data (e.g. day, month, year) as a chart
-- [ ] A user can create a list of currencies to track, which are shown when the app is loaded
-
-### Would-be-cool
-
-> Cool ideas that are outside the scope of this project
-
-- [ ] Subscribe to email alerts for specific exchange rates\*
-
-\* This could be implemented with something like express server + nodemailer + mailtrap
+- [x] A user can store currency rates in a table

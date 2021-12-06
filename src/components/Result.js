@@ -2,9 +2,13 @@ import { FROM_ID, RATE_ID, RESULT_ID, TO_ID } from "../constants.js";
 import { fetchData } from "../api/index.js";
 
 export const createResult = async (fromCurrency, toCurrency, amount) => {
-  const query = `convert?from=${fromCurrency}&to=${toCurrency}&amount=${amount}`;
+  const query = `convert?from=${fromCurrency}&to=${toCurrency}&amount=${Math.abs(
+    amount
+  )}`;
   try {
-    const { result } = await fetchData(query);
+    let { result } = await fetchData(query);
+
+    result = result * (amount / Math.abs(amount));
 
     // Style fractions after first 2 decimals to grey
     const roundedResult = result.toPrecision(8);
@@ -17,7 +21,7 @@ export const createResult = async (fromCurrency, toCurrency, amount) => {
       fractionRight = "";
     }
 
-    const exchangeRate = roundedResult / amount;
+    const exchangeRate = roundedResult / Math.abs(amount);
     const inverseExchangeRate = (1 / exchangeRate).toPrecision(8);
 
     localStorage.setItem("rate", exchangeRate);
@@ -40,7 +44,7 @@ export const createResult = async (fromCurrency, toCurrency, amount) => {
     const [, currencyToText] = currencyTo.textContent.split(/-(.+)/);
 
     const footer =
-      amount > 1
+      Math.abs(amount) > 1
         ? String.raw`<p id=${RATE_ID} class="fs-6">1 ${currencyFromText} = ${exchangeRate}${currencyToText}<br/>
         1 ${currencyToText} = ${inverseExchangeRate}${currencyFromText}</p>`
         : String.raw`
