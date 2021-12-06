@@ -9,7 +9,7 @@ import {
   INPUT_YEAR_ID,
   TO_ID,
 } from "../constants.js";
-import { updateChart } from "../utils.js";
+import { calcDates, createChartData } from "../utils.js";
 
 export const createChart = async (chart) => {
   try {
@@ -72,6 +72,37 @@ export const createChart = async (chart) => {
     </div>
       `;
   }
+};
+
+export const updateChart = async (chartElement, fromCurrency, toCurrency) => {
+  const chartRange = chartElement.querySelectorAll("input[type='radio']");
+  const [selectedRange] = [...chartRange].filter((input) => input.checked);
+
+  const [startDate, endDate] = calcDates(parseInt(selectedRange.id));
+
+  // Show loading spinner while chart is being updated
+  const chartSpinner = document.getElementById(CHART_SPINNER_ID);
+  chartSpinner.classList.toggle("visually-hidden");
+
+  // Make old image lighter
+  const imgElement = document.getElementById(IMG_CHART_ID);
+  imgElement.classList.add("opacity-25");
+
+  const chart = await createChartData(
+    startDate,
+    endDate,
+    fromCurrency,
+    toCurrency
+  );
+  const url = await fetchChart(chart);
+
+  // Hide loading spinner again
+  chartSpinner.classList.toggle("visually-hidden");
+
+  // Restore opacity again
+  imgElement.classList.remove("opacity-25");
+
+  imgElement.src = url;
 };
 
 const handleRangeSelect = (e) => {

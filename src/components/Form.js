@@ -9,9 +9,10 @@ import {
   SHOW_RESULT,
   SAVE_BTN_ID,
 } from "../constants.js";
-import { calcDates, createChartData, updateChart } from "../utils.js";
+import { calcDates, createChartData } from "../utils.js";
 import { createResult } from "./Result.js";
 import { addTableRow, createTable, deleteTableRow } from "./Table.js";
+import { updateChart } from "./Chart.js";
 
 export const createForm = () => {
   return String.raw`
