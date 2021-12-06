@@ -21,7 +21,7 @@ export const createResult = async (fromCurrency, toCurrency, amount) => {
       fractionRight = "";
     }
 
-    const exchangeRate = roundedResult / Math.abs(amount);
+    const exchangeRate = roundedResult / amount;
     const inverseExchangeRate = (1 / exchangeRate).toPrecision(8);
 
     localStorage.setItem("rate", exchangeRate);
@@ -48,7 +48,7 @@ export const createResult = async (fromCurrency, toCurrency, amount) => {
         ? String.raw`<p id=${RATE_ID} class="fs-6">1 ${currencyFromText} = ${exchangeRate}${currencyToText}<br/>
         1 ${currencyToText} = ${inverseExchangeRate}${currencyFromText}</p>`
         : String.raw`
-        <p class="fs-6">1 ${currencyToText} = ${inverseExchangeRate}${currencyFromText}</p>`;
+        <p id=${RATE_ID} class="fs-6">1 ${currencyToText} = ${inverseExchangeRate}${currencyFromText}</p>`;
 
     // Add value to result element
     document.getElementById(RESULT_ID).innerHTML = String.raw`
