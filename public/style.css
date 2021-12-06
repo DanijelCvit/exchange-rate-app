@@ -4,32 +4,83 @@
   margin: 0;
 }
 
-:root {
-  --pink: #d14292;
-  --green: #238648;
-  --light-green: #66c992;
-  --light-blue: #47bfff;
-  --dark-grey: #252525;
-  --dark-yellow: #332a00;
-  --dark-blue: #00264c;
-  --blue: #0080ff;
-  --yellow: #ffcd00;
-  --turquoise: #00cdbf;
-  --green: #34cd8a;
-  --light-grey: #c0c0c0;
-  --orange: #ff7818;
-  --grey: rgba(79, 79, 79);
+body {
+  /* font-family: "Montserrat", sans-serif; */
+  font-family: "Fakt Pro Normal";
+  padding: 0 1rem;
+  background-color: #f3f6f9;
 }
 
-body {
-  font-family: "Montserrat", sans-serif;
-  padding: 0 1rem;
+header,
+#app,
+#app.container {
+  background-color: #f3f6f9;
+}
+
+form,
+#chart,
+#table {
+  background-color: white;
+}
+
+header img {
+  width: 250px;
+}
+
+.btn-primary {
+  background-color: #0abf53;
+  color: white;
+  border-color: #0abf53;
+}
+
+.btn-primary:active {
+  outline: #20304c;
+}
+
+.btn-primary:hover {
+  background-color: #068f3e;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #20304c;
+}
+
+.btn-secondary:hover {
+  background-color: #394962;
+}
+
+.btn-outline-primary {
+  background-color: white;
+  color: #394962;
+  border-color: #394962;
+}
+
+.btn-outline-primary:hover {
+  background-color: #394962;
+  border-color: #394962;
+}
+
+.btn-check:checked + .btn-outline-primary {
+  background-color: rgb(32, 48, 76);
+  border-color: #20304c;
+}
+
+.btn-check:active {
+  /* outline-color: rgb(32, 48, 76, 0.5);
+   */
+}
+
+.table-text-opacity {
+  color: rgba(32, 48, 76, 0.2);
+  font-size: 3rem;
+  border-bottom: 0;
 }
 
 .btn-round {
   width: 50px;
   height: 50px;
-  background-color: var(--green);
+  background-color: #0abf53;
   border: 0;
 }
 

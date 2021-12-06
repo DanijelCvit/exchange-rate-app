@@ -7,7 +7,7 @@ export const createTable = () => {
   }
 
   return String.raw`
-<div class="row shadow mb-5 p-2">
+<div id="table" class="row shadow mb-5 p-2">
 <table class="table table-hover align-items-center mt-3">
   <thead >
     <tr>
@@ -55,6 +55,12 @@ export const addTableRow = () => {
   // Save data in local storage
   const rowsString = localStorage.getItem("rows");
   const rowsData = JSON.parse(rowsString);
+
+  const tableBodyElement = document.querySelector("table tbody");
+  if (!rowsData.rowArray.length) {
+    tableBodyElement.innerHTML = "";
+  }
+
   rowsData.rowArray.push({
     fromCurrency: data.fromCurrency,
     toCurrency: data.toCurrency,
@@ -64,7 +70,6 @@ export const addTableRow = () => {
 
   localStorage.setItem("rows", JSON.stringify(rowsData));
 
-  const tableBodyElement = document.querySelector("table tbody");
   const tableRowTemplate = createTableRow(data, rate, newId);
   tableBodyElement.insertAdjacentHTML("beforeend", tableRowTemplate);
 
@@ -113,6 +118,14 @@ export const updateTableRows = () => {
   const rowsString = localStorage.getItem("rows");
   const rowsData = JSON.parse(rowsString);
   const { rowArray } = rowsData;
+
+  if (!rowArray.length) {
+    return String.raw`
+  <tr>
+    <td colspan="5" style="border-bottom:0;"><div class="text-center table-text-opacity">Empty</div></td>
+  </tr>
+  `;
+  }
 
   let rowsTemplate = "";
   for (let i = 0; i < rowArray.length; i++) {

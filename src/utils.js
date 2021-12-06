@@ -48,7 +48,7 @@ export const createChartData = async (
         {
           label: `${toCurrency}`,
           backgroundColor: "rgba(255, 255, 255, 0)",
-          borderColor: "rgba(13, 110, 253, 1)",
+          borderColor: "rgba(32, 48, 76, 1)",
           data: data,
         },
       ],
@@ -88,7 +88,7 @@ export const updateChart = async (chartElement, fromCurrency, toCurrency) => {
     toCurrency
   );
   const url = await fetchChart(chart);
-  const imgElement = app.querySelector("img");
+  const imgElement = app.querySelector("#img-chart");
   imgElement.src = url;
 };
 
@@ -96,3 +96,4 @@ export const updateChart = async (chartElement, fromCurrency, toCurrency) => {
 //     const value = JSON.stringify(data);
 //     localStorage.setItem(key, value);
 // }
+//"rgba(13, 110, 253, 1)"

@@ -43,7 +43,7 @@ export const createChart = async (chart) => {
       <label class="btn btn-outline-primary" for="365">1Y</label>
     </div>
   </div>
-  <div><img class="img-fluid" src="${url}" /></div>
+  <div><img id="img-chart" class="img-fluid" src="${url}" /></div>
 </div>
   `;
   } catch (error) {
