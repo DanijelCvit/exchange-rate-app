@@ -1,4 +1,4 @@
-import { SAVE_BTN_ID } from "../constants.js";
+import { SAVE_BTN_ID, TABLE_ID } from "../constants.js";
 
 export const createTable = () => {
   if (!localStorage.getItem("rows")) {
@@ -7,7 +7,7 @@ export const createTable = () => {
   }
 
   return String.raw`
-<div id="table" class="row shadow mb-5 p-2">
+<div id=${TABLE_ID} class="row shadow mb-5 p-2">
 <table class="table table-hover align-items-center mt-3">
   <thead >
     <tr>

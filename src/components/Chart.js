@@ -1,5 +1,13 @@
 import { fetchChart } from "../api/index.js";
-import { FROM_ID, TO_ID } from "../constants.js";
+import {
+  CHART_ID,
+  FROM_ID,
+  IMG_CHART_ID,
+  INPUT_MONTH_ID,
+  INPUT_WEEK_ID,
+  INPUT_YEAR_ID,
+  TO_ID,
+} from "../constants.js";
 import { updateChart } from "../utils.js";
 
 export const createChart = async (chart) => {
@@ -7,7 +15,7 @@ export const createChart = async (chart) => {
     const url = await fetchChart(chart);
 
     return String.raw`
-<div id="chart" class="row shadow p-1 mb-5 text-center">
+<div id=${CHART_ID} class="row shadow p-1 mb-5 text-center">
   <div
     class="btn-toolbar d-flex justify-content-center mb-3"
     role="toolbar"
@@ -18,7 +26,7 @@ export const createChart = async (chart) => {
         type="radio"
         class="btn-check"
         name="btnradio"
-        id="7"
+        id=${INPUT_WEEK_ID}
         autocomplete="off"
         checked
       />
@@ -28,7 +36,7 @@ export const createChart = async (chart) => {
         type="radio"
         class="btn-check"
         name="btnradio"
-        id="30"
+        id=${INPUT_MONTH_ID}
         autocomplete="off"
       />
       <label class="btn btn-outline-primary" for="30">1M</label>
@@ -37,20 +45,20 @@ export const createChart = async (chart) => {
         type="radio"
         class="btn-check"
         name="btnradio"
-        id="365"
+        id=${INPUT_YEAR_ID}
         autocomplete="off"
       />
       <label class="btn btn-outline-primary" for="365">1Y</label>
     </div>
   </div>
-  <div><img id="img-chart" class="img-fluid" src="${url}" /></div>
+  <div><img id=${IMG_CHART_ID} class="img-fluid" src="${url}" /></div>
 </div>
   `;
   } catch (error) {
     console.log(error);
 
     return String.raw`
-    <div id="chart" class="row shadow p-1 mb-5 text-center">
+    <div id=${CHART_ID} class="row shadow p-1 mb-5 text-center">
       <p class="mt-3"><i class="fas fa-chart-line fa-5x"></i></p>
       <p class="text-danger">Something wen't wrong: couldn't fetch chart</p>       
     </div>
@@ -59,8 +67,12 @@ export const createChart = async (chart) => {
 };
 
 const handleRangeSelect = (e) => {
-  if (e.target?.id === "7" || e.target?.id === "30" || e.target?.id === "365") {
-    const chartElement = document.getElementById("chart");
+  if (
+    e.target?.id === INPUT_WEEK_ID ||
+    e.target?.id === INPUT_MONTH_ID ||
+    e.target?.id === INPUT_YEAR_ID
+  ) {
+    const chartElement = document.getElementById(CHART_ID);
     const fromCurrency = document.getElementById(FROM_ID).value;
     const toCurrency = document.getElementById(TO_ID).value;
 
