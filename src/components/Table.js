@@ -1,4 +1,4 @@
-import { AMOUNT_ID, SAVE_BTN_ID } from "../constants.js";
+import { SAVE_BTN_ID } from "../constants.js";
 
 export const createTable = () => {
   if (!localStorage.getItem("rows")) {
@@ -85,8 +85,6 @@ export const deleteTableRow = (e) => {
     return;
   }
 
-  console.log("hello");
-
   const currentRow = e.currentTarget;
   const saveButton = document.getElementById(SAVE_BTN_ID);
 
@@ -122,7 +120,7 @@ export const updateTableRows = () => {
   if (!rowArray.length) {
     return String.raw`
   <tr>
-    <td colspan="5" style="border-bottom:0;"><div class="text-center table-text-opacity">Empty</div></td>
+    <td colspan="5" style="border-bottom:0;"><div class="text-center table-text-opacity">Save rates here</div></td>
   </tr>
   `;
   }

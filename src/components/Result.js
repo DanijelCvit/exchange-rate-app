@@ -36,8 +36,8 @@ export const createResult = async (fromCurrency, toCurrency, amount) => {
       (currency) => currency.value === toCurrency
     );
 
-    const [, currencyFromText] = currencyFrom.textContent.split("-");
-    const [, currencyToText] = currencyTo.textContent.split("-");
+    const [, currencyFromText] = currencyFrom.textContent.split(/-(.+)/);
+    const [, currencyToText] = currencyTo.textContent.split(/-(.+)/);
 
     const footer =
       amount > 1

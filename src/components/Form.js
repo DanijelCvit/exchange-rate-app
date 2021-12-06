@@ -95,7 +95,6 @@ export const createForm = () => {
 };
 
 export const handleSwitchCurrencies = () => {
-  console.log("hello");
   const fromElement = document.getElementById(FROM_ID);
   const toElement = document.getElementById(TO_ID);
 

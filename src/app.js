@@ -12,6 +12,7 @@ import {
 } from "./constants.js";
 import { createHeader } from "./components/Header.js";
 import { addTableRow } from "./components/Table.js";
+import { createFooter } from "./components/Footer.js";
 
 const app = async () => {
   const app = document.getElementById("app");
@@ -72,6 +73,10 @@ const app = async () => {
     document.getElementById(SUBMIT_BTN_ID).click();
     document.querySelector("form").addEventListener("change", handleSubmit);
   }
+
+  // Create footer
+  const footerTemplate = createFooter();
+  app.insertAdjacentHTML("afterend", footerTemplate);
 };
 
 window.addEventListener("load", app);

@@ -14,8 +14,6 @@ export const createOptions = async () => {
                 `;
     }
   } catch (error) {
-    // console.log(error);
-
     options = String.raw`
       <option value="error" selected>Failed to get symbols</option>
     `;

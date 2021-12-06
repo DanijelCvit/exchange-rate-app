@@ -5,7 +5,6 @@
 }
 
 body {
-  /* font-family: "Montserrat", sans-serif; */
   font-family: "Fakt Pro Normal";
   padding: 0 1rem;
   background-color: #f3f6f9;
@@ -22,9 +21,12 @@ form,
 #table {
   background-color: white;
 }
+header {
+  margin-left: -0.67rem;
+}
 
 header img {
-  width: 250px;
+  width: 150px;
 }
 
 .btn-primary {
@@ -33,13 +35,11 @@ header img {
   border-color: #0abf53;
 }
 
+.btn-primary:focus,
+.btn-primary:hover,
 .btn-primary:active {
-  outline: #20304c;
-}
-
-.btn-primary:hover {
   background-color: #068f3e;
-  color: white;
+  border-color: #068f3e;
 }
 
 .btn-secondary {
@@ -66,11 +66,6 @@ header img {
   border-color: #20304c;
 }
 
-.btn-check:active {
-  /* outline-color: rgb(32, 48, 76, 0.5);
-   */
-}
-
 .table-text-opacity {
   color: rgba(32, 48, 76, 0.2);
   font-size: 3rem;
@@ -86,6 +81,15 @@ header img {
 
 .btn-hidden {
   display: none;
+}
+
+footer {
+  background-color: rgb(32, 48, 76);
+  color: #a5afbd;
+}
+
+footer p {
+  padding: 0.5rem 0;
 }
 
 @media screen and (min-width: 768px) {
