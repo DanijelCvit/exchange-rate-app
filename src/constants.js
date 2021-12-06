@@ -13,3 +13,4 @@ export const INPUT_MONTH_ID = "30";
 export const INPUT_YEAR_ID = "365";
 export const IMG_CHART_ID = "img-chart";
 export const TABLE_ID = "table";
+export const CHART_SPINNER_ID = "chart-spinner";

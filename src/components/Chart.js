@@ -1,6 +1,7 @@
 import { fetchChart } from "../api/index.js";
 import {
   CHART_ID,
+  CHART_SPINNER_ID,
   FROM_ID,
   IMG_CHART_ID,
   INPUT_MONTH_ID,
@@ -51,7 +52,14 @@ export const createChart = async (chart) => {
       <label class="btn btn-outline-primary" for="365">1Y</label>
     </div>
   </div>
-  <div><img id=${IMG_CHART_ID} class="img-fluid" src="${url}" /></div>
+  <div class="position-relative">
+  <img id="${IMG_CHART_ID}" class="img-fluid" src="${url}" />
+  <div id=${CHART_SPINNER_ID} class="visually-hidden d-flex justify-content-center position-absolute top-50 start-50">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</div>
 </div>
   `;
   } catch (error) {

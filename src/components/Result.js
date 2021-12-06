@@ -40,11 +40,13 @@ export const createResult = async (fromCurrency, toCurrency, amount) => {
       (currency) => currency.value === toCurrency
     );
 
-    let [, currencyFromText] = currencyFrom.textContent.split(/-(.+)/);
-    let [, currencyToText] = currencyTo.textContent.split(/-(.+)/);
+    const [, currencyFromText] = currencyFrom.textContent.split(/-(.+)/);
+    const [, currencyToText] = currencyTo.textContent.split(/-(.+)/);
+    let multipleFromCurrencies = "";
+    let multipleToCurrencies = "";
 
-    roundedResult !== 1 ? (currencyToText += "s") : currencyToText;
-    +amount !== 1 ? (currencyFromText += "s") : currencyFromText;
+    +amount !== 1 ? (multipleFromCurrencies = "s") : multipleFromCurrencies;
+    roundedResult !== 1 ? (multipleToCurrencies = "s") : multipleToCurrencies;
 
     const footer =
       Math.abs(amount) > 1
@@ -55,8 +57,10 @@ export const createResult = async (fromCurrency, toCurrency, amount) => {
 
     // Add value to result element
     document.getElementById(RESULT_ID).innerHTML = String.raw`
-    <p>${amount}${currencyFromText} =</p>
-    <h1>${integer}.${fractionLeft}<span class="text-secondary">${fractionRight}</span>${currencyToText}</h1>
+    <p>${amount}${currencyFromText + multipleFromCurrencies} =</p>
+    <h1>${integer}.${fractionLeft}<span class="text-secondary">${fractionRight}</span>${
+      currencyToText + multipleToCurrencies
+    }</h1>
     ${footer}
     `;
   } catch (error) {

@@ -1,4 +1,5 @@
 import { fetchData, fetchChart } from "./api/index.js";
+import { CHART_SPINNER_ID, IMG_CHART_ID } from "./constants.js";
 
 const DATASET_SIZE_MAX = 31;
 const DATASET_DIVIDER = 12;
@@ -81,6 +82,14 @@ export const updateChart = async (chartElement, fromCurrency, toCurrency) => {
 
   const [startDate, endDate] = calcDates(parseInt(selectedRange.id));
 
+  // Show loading spinner while chart is being updated
+  const chartSpinner = document.getElementById(CHART_SPINNER_ID);
+  chartSpinner.classList.toggle("visually-hidden");
+
+  // Make old image lighter
+  const imgElement = document.getElementById(IMG_CHART_ID);
+  imgElement.classList.add("opacity-25");
+
   const chart = await createChartData(
     startDate,
     endDate,
@@ -88,6 +97,12 @@ export const updateChart = async (chartElement, fromCurrency, toCurrency) => {
     toCurrency
   );
   const url = await fetchChart(chart);
-  const imgElement = app.querySelector("#img-chart");
+
+  // Hide loading spinner again
+  chartSpinner.classList.toggle("visually-hidden");
+
+  // Restore opacity again
+  imgElement.classList.remove("opacity-25");
+
   imgElement.src = url;
 };
