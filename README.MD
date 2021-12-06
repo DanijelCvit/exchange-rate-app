@@ -4,6 +4,8 @@
 
 [DEMO](https://danijelcvit.github.io/exchange-rate-app/)
 
+<p align="center"><img src="./public/exchange-app.gif" ></p>
+
 The goal of this project is to build a small exchange rate app. The user should be able to track the latest currency values expressed in their selected base currency (e.g. most recent value of the 1 EUR expressed in USD). Also it should be possible to convert any amount from one currency into another currency based on the current rate. Finally some historical data (day, month, etc.) could be shown as a chart.
 
 ## Development
@@ -49,13 +51,13 @@ Let's run through the folders:
 
 ## Brand
 
-The brand I will be basing my design off of will be [Adyen](https://www.adyen.com/)
+The brand I based my design off of is [Adyen](https://www.adyen.com/)
 
 ## Backlog
 
 Below is a list of my must haves and nice to haves for this project.
 
-The APIs I will be using are :
+The APIs I used are :
 
 - [Exchangerate.host](https://exchangerate.host/) (main)
 - [QuickChart](https://quickchart.io/) (for charts)
