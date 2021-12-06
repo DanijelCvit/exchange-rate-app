@@ -2,6 +2,8 @@
 
 ## Description
 
+[DEMO](https://danijelcvit.github.io/exchange-rate-app/)
+
 The goal of this project will be to build a small exchange rate app. The user should be able to track the latest currency values expressed in their selected base currency (e.g. most recent value of the 1 EUR expressed in USD). Also it should be possible to convert any amount from one currency into another currency based on the current rate. Finally some historical data (day, month, etc.) could be shown as a chart.
 
 ## Brand
