@@ -2,11 +2,11 @@
 
 ## Description
 
+The goal of this project was to build a small exchange rate app. The user is able to convert any amount from one currency into another currency based on the current rate. Also it's possible to save the conversion rate into a table. Finally some historical data (day, month, etc.) can be shown as a chart.
+
 You can view a live demo here: [DEMO](https://danijelcvit.github.io/exchange-rate-app/)
 
 <p align="center"><img src="./public/exchange-app.gif" ></p>
-
-The goal of this project was to build a small exchange rate app. The user is able to convert any amount from one currency into another currency based on the current rate. Also it's possible to save the conversion rate into a table. Finally some historical data (day, month, etc.) can be shown as a chart.
 
 ## Usage
 
