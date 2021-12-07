@@ -51,8 +51,6 @@ This project uses the following folder structure:
 
 ## APIs
 
-Below is a list of my must haves and nice to haves for this project.
-
 The APIs I used are :
 
 - [Exchangerate.host](https://exchangerate.host/) (main)
