@@ -11,7 +11,7 @@ import {
 } from "../constants.js";
 import { calcDates, createChartData } from "../utils.js";
 import { createResult } from "./Result.js";
-import { addTableRow, createTable, deleteTableRow } from "./Table.js";
+import { createTable, deleteTableRow } from "./Table.js";
 import { updateChart } from "./Chart.js";
 
 export const createForm = () => {
