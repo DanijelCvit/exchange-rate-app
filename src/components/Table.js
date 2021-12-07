@@ -42,12 +42,6 @@ const createTableRow = (data, rate, newId) => {
 };
 
 export const addTableRow = () => {
-  const newId = document.querySelectorAll("table tbody tr").length + 1;
-
-  if (newId === 10) {
-    document.getElementById(SAVE_BTN_ID).disabled = true;
-  }
-
   const storedData = localStorage.getItem("exchangeData");
   const data = JSON.parse(storedData);
   const rate = localStorage.getItem("rate");
@@ -59,6 +53,12 @@ export const addTableRow = () => {
   const tableBodyElement = document.querySelector("table tbody");
   if (!rowsData.rowArray.length) {
     tableBodyElement.innerHTML = "";
+  }
+
+  const newId = rowsData.rowArray.length + 1;
+
+  if (newId === 10) {
+    document.getElementById(SAVE_BTN_ID).disabled = true;
   }
 
   rowsData.rowArray.push({
