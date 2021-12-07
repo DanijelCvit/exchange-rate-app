@@ -43,8 +43,8 @@ This project uses the following folder structure:
 
 ```
 
-- `public` this contains the static files (images, stylesheets) that can be used by our `index.html` file
-- `src` this contains all of our JavaScript code
+- `public` this contains the static files (images, stylesheets) that can be used by the `index.html` file
+- `src` this contains all of the JavaScript code
   - `api` this contains the fetch functions that will get the API data that we need
   - `components` all the separate parts of the page that we need to render
   - `app.js` this is the main function that generates the page
