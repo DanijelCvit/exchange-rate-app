@@ -44,16 +44,26 @@ export const createResult = async (fromCurrency, toCurrency, amount) => {
     const [, currencyToText] = currencyTo.textContent.split(/-(.+)/);
     let multipleFromCurrencies = "";
     let multipleToCurrencies = "";
+    let pluralTo = "";
+    let pluralFrom = "";
 
     +amount !== 1 ? (multipleFromCurrencies = "s") : multipleFromCurrencies;
     roundedResult !== 1 ? (multipleToCurrencies = "s") : multipleToCurrencies;
+    exchangeRate !== 1 ? (pluralTo = "s") : pluralTo;
+    inverseExchangeRate !== 1 ? (pluralFrom = "s") : pluralFrom;
 
     const footer =
       Math.abs(amount) > 1
-        ? String.raw`<p id=${RATE_ID} class="fs-6">1 ${currencyFromText} = ${exchangeRate}${currencyToText}<br/>
-        1 ${currencyToText} = ${inverseExchangeRate}${currencyFromText}</p>`
+        ? String.raw`<p id=${RATE_ID} class="fs-6">1 ${currencyFromText} = ${exchangeRate}${
+            currencyToText + pluralTo
+          }<br/>
+        1 ${currencyToText} = ${inverseExchangeRate}${
+            currencyFromText + pluralFrom
+          }</p>`
         : String.raw`
-        <p id=${RATE_ID} class="fs-6">1 ${currencyToText} = ${inverseExchangeRate}${currencyFromText}</p>`;
+        <p id=${RATE_ID} class="fs-6">1 ${currencyToText} = ${inverseExchangeRate}${
+            currencyFromText + pluralFrom
+          }</p>`;
 
     // Add value to result element
     document.getElementById(RESULT_ID).innerHTML = String.raw`
