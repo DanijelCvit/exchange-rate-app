@@ -119,8 +119,6 @@ export const initHandleSubmit = () => {
       return;
     }
 
-    // Hide submit button, show save button
-
     // Create result element
     await createResult(fromCurrency, toCurrency, amount);
 
